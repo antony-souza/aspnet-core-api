@@ -1,11 +1,11 @@
 ﻿namespace BackendAspNet.utils;
 
-public class HashPasswordUtil
+public static class HashPasswordUtil
 {
     public static string Hash(string password)
     {
-        string salt = BCrypt.Net.BCrypt.GenerateSalt(DotNetEnv.Env.GetInt("BCRYPT_SAL"));
-        string hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
+        var salt = BCrypt.Net.BCrypt.GenerateSalt(DotNetEnv.Env.GetInt("BCRYPT_SAL"));
+        var hash = BCrypt.Net.BCrypt.HashPassword(password, salt);
         
         return hash;
     }
