@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BackendAspNet.modules.user.schema;
+namespace BackendAspNet.modules.user.dto;
 
-public class UserSchema
+public class UserDto
 {
     [Required(ErrorMessage = "Name is required!")]
     public string Name { get; set; } = String.Empty;
