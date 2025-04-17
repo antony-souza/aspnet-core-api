@@ -1,14 +1,16 @@
 ﻿using BackendAspNet.modules.user.dto;
 using BackendAspNet.modules.user.usecase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.user;
 
+[Authorize]
 [ApiController]
 [Route("user")]
 public class UserController : ControllerBase
 {
-    private CreateUserUseCase _createUserUseCase;
+    private readonly CreateUserUseCase _createUserUseCase;
 
     public UserController(CreateUserUseCase createUserUseCase)
     {
