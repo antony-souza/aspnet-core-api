@@ -2,7 +2,7 @@
 
 namespace BackendAspNet.modules.user.dto;
 
-public class UserDto
+public class CreateUserDto
 {
     [Required(ErrorMessage = "Name is required!")]
     public string Name { get; set; } = String.Empty;

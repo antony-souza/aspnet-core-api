@@ -19,9 +19,9 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("create")]
-    public async Task<IActionResult> Create([FromBody] UserDto userDto)
+    public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
-        var response = await _createUserUseCase.Handler(userDto);
+        var response = await _createUserUseCase.Handler(createUserDto);
 
         return Ok(response);
     }

@@ -19,7 +19,12 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Auth([FromBody] AuthDto authDto)
     {
        var response = await _authUseCase.Handler(authDto);
-       
+
+       if (!response.Success)
+       {
+           return BadRequest(response);
+       }
+
        return Ok(response);
     }
 }

@@ -29,8 +29,8 @@ builder.Services.AddAuthentication("Bearer")
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<CreateUserUseCase>();
 builder.Services.AddScoped<AuthUseCase>();
+builder.Services.AddScoped<CreateUserUseCase>();
 
 var app = builder.Build();
 
