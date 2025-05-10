@@ -4,9 +4,9 @@
     public string Message { get; set; } = string.Empty;
     public object? Data { get; set; }
 
-    public static ApiResponse SuccessResponse(string message, object? data = null)
+    public static ApiResponse SuccessResponse(object? data)
     {
-        return new ApiResponse { Success = true,Message = message,Data = data };
+        return new ApiResponse { Success = true, Data = data };
     }
 
     public static ApiResponse ErrorResponse(string message)
