@@ -1,5 +1,6 @@
 using System.Text;
 using BackendAspNet.context;
+using BackendAspNet.middleware;
 using BackendAspNet.modules.auth.usecase;
 using BackendAspNet.modules.user.usecase;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ builder.Services.AddScoped<CreateUserUseCase>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

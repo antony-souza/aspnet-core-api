@@ -24,9 +24,4 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.8.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="src\core\interfaces\" />
-      <Folder Include="src\middleware\" />
-    </ItemGroup>
-
 </Project>

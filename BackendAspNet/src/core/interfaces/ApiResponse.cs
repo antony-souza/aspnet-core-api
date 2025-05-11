@@ -1,6 +1,8 @@
-﻿public class ApiResponse
+﻿namespace BackendAspNet.core.interfaces;
+
+public class ApiResponse
 {
-    public bool Success { get; set; } = true;
+    public bool Success { get; private set; } = true;
     public string Message { get; set; } = string.Empty;
     public object? Data { get; set; }
 
