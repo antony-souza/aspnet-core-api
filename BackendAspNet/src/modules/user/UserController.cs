@@ -43,4 +43,18 @@ public class UserController : ControllerBase
 
         return Ok(response);
     }
+    
+    [HttpGet]
+    [Route("find-by-id/{id:guid}")]
+    public async Task<IActionResult> FindUserById([FromRoute] string id)
+    {
+        var response = await _userServices.FindUserById(id);
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
 }

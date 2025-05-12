@@ -10,12 +10,12 @@ namespace BackendAspNet.modules.user;
 public class UserServices
 {
     private readonly AppDbContext _appDbContext;
-    
+
     public UserServices(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }
-    
+
     public async Task<ApiResponse> FindAllUsers()
     {
         var users = await _appDbContext.User.Select((u) => new
@@ -27,7 +27,26 @@ public class UserServices
 
         return users.Count == 0 ? ApiResponse.ErrorResponse("Users not found!") : ApiResponse.SuccessResponse(users);
     }
-    
+
+    public async Task<ApiResponse> FindUserById(string id)
+    {
+        var user = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return ApiResponse.ErrorResponse("User not found!");
+        }
+
+        var userData = new
+        {
+            user.Id,
+            user.Name,
+            user.Email,
+        };
+        
+        return ApiResponse.SuccessResponse(userData);
+    }
+
     public async Task<ApiResponse> CreateUser(CreateUserDto dto)
     {
         var existingUser = await _appDbContext.User.FirstOrDefaultAsync(u => u.Email == dto.Email);
