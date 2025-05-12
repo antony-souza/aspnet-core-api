@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.user;
 
-[Authorize]
+// [Authorize]
 [ApiController]
 [Route("user")]
 public class UserController : ControllerBase
@@ -55,6 +55,30 @@ public class UserController : ControllerBase
             return BadRequest(response);
         }
 
+        return Ok(response);
+    }
+    
+    [HttpPut]
+    [Route("update/{id:guid}")]
+    public async Task<IActionResult> Update([FromRoute] string id,[FromBody] UpdateUserDto updateUserDto)
+    {
+        var response = await _userServices.UpdateUser(id ,updateUserDto);
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+        return Ok(response);
+    }
+    
+    [HttpPut]
+    [Route("delete/{id:guid}")]
+    public async Task<IActionResult> DeleteUser([FromRoute] string id)
+    {
+        var response = await _userServices.DeleteUser(id);
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
         return Ok(response);
     }
 }

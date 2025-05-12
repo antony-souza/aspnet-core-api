@@ -8,7 +8,7 @@ public class UserEntity
 {
     [Key]
     [Column("id")]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string? Id { get; set; } = Guid.NewGuid().ToString();
 
     [Column("name")]
     public string Name { get; set; } = string.Empty;
@@ -18,4 +18,7 @@ public class UserEntity
 
     [Column("password")]
     public string Password { get; set; } = string.Empty;
+    
+    [Column("enabled")]
+    public bool? Enabled { get; set; } = true;
 };
