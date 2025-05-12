@@ -6,13 +6,13 @@ using BackendAspNet.modules.auth.dto;
 using BackendAspNet.utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendAspNet.modules.auth.usecase;
+namespace BackendAspNet.modules.auth;
 
-public class AuthUseCase
+public class AuthService
 {
     private readonly AppDbContext _appDbContext;
 
-    public AuthUseCase(AppDbContext appDbContext)
+    public AuthService(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }

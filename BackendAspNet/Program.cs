@@ -1,8 +1,8 @@
 using System.Text;
 using BackendAspNet.context;
 using BackendAspNet.middleware;
-using BackendAspNet.modules.auth.usecase;
-using BackendAspNet.modules.user.usecase;
+using BackendAspNet.modules.auth;
+using BackendAspNet.modules.user;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -30,8 +30,8 @@ builder.Services.AddAuthentication("Bearer")
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<AuthUseCase>();
-builder.Services.AddScoped<CreateUserUseCase>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<UserServices>();
 
 var app = builder.Build();
 

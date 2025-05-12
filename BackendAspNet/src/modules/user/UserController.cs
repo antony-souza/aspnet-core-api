@@ -1,5 +1,4 @@
 ﻿using BackendAspNet.modules.user.dto;
-using BackendAspNet.modules.user.usecase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,18 +9,37 @@ namespace BackendAspNet.modules.user;
 [Route("user")]
 public class UserController : ControllerBase
 {
-    private readonly CreateUserUseCase _createUserUseCase;
+    private readonly UserServices _userServices;
 
-    public UserController(CreateUserUseCase createUserUseCase)
+    public UserController(UserServices userServices)
     {
-        _createUserUseCase = createUserUseCase;
+        _userServices = userServices;
     }
 
     [HttpPost]
     [Route("create")]
     public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
-        var response = await _createUserUseCase.Handler(createUserDto);
+        var response = await _userServices.CreateUser(createUserDto);
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("all-users")]
+    public async Task<IActionResult> FindAllUsers()
+    {
+        var response = await _userServices.FindAllUsers();
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
 
         return Ok(response);
     }

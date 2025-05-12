@@ -8,7 +8,7 @@ public class ApiResponse
 
     public static ApiResponse SuccessResponse(object? data)
     {
-        return new ApiResponse { Success = true, Data = data };
+        return new ApiResponse { Success = true, Message = "Success!",Data = data };
     }
 
     public static ApiResponse ErrorResponse(string message)
