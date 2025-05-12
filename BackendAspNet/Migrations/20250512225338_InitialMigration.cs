@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BackendAspNet.Migrations
 {
     /// <inheritdoc />
-    public partial class AddEnabledToUser : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,9 @@ namespace BackendAspNet.Migrations
                     name = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
-                    enabled = table.Column<bool>(type: "boolean", nullable: true)
+                    enabled = table.Column<bool>(type: "boolean", nullable: true),
+                    createdAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

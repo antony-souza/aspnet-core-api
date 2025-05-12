@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.user;
 
-// [Authorize]
+[Authorize]
 [ApiController]
 [Route("user")]
 public class UserController : ControllerBase

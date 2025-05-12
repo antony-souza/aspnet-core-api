@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BackendAspNet.utils;
 
-namespace BackendAspNet.modules.user.entity;
+namespace BackendAspNet.modules.category.entity;
 
-[Table("users")]
-public class UserEntity : BaseEntity
+[Table("categories")]
+public class CategoryEntity : BaseEntity
 {
     [Key]
     [Column("id")]
@@ -13,10 +13,4 @@ public class UserEntity : BaseEntity
 
     [Column("name")]
     public string Name { get; set; } = string.Empty;
-
-    [Column("email")]
-    public string Email { get; set; } = string.Empty;
-
-    [Column("password")]
-    public string Password { get; set; } = string.Empty;
-};
+}

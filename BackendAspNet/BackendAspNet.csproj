@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\modules\auth\usecase\" />
+      <Folder Include="src\modules\product\" />
     </ItemGroup>
 
 </Project>
