@@ -26,4 +26,32 @@ public class ProductController : ControllerBase
         
         return Ok(response);
     }
+    
+    [HttpGet]
+    [Route("all-products")]
+    public async Task<IActionResult> FindAllProducts()
+    {
+        var response = await _productService.FindAllProducts();
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
+    
+    [HttpGet]
+    [Route("find-by-id/{id:guid}")]
+    public async Task<IActionResult> FindProductById([FromRoute] string id)
+    {
+        var response = await _productService.FindProductById(id);
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
 }

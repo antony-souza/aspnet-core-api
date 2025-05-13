@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BackendAspNet.modules.category.entity;
 using BackendAspNet.utils;
 
 namespace BackendAspNet.modules.product.entity;
@@ -19,4 +20,7 @@ public class ProductEntity : BaseEntity
     
     [Column("categoryId")]
     public string CategoryId { get; set; } = string.Empty;
+    
+    [ForeignKey("CategoryId")]
+    public CategoryEntity? Category { get; set; }
 }
