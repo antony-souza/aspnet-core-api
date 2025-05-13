@@ -22,13 +22,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
         var response = await _userServices.CreateUser(createUserDto);
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return GenericResponseController.Handler(response);
     }
 
     [HttpGet]
@@ -36,7 +30,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> FindAllUsers()
     {
         var response = await _userServices.FindAllUsers();
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
     
     [HttpGet]
@@ -44,7 +38,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> FindUserById([FromRoute] string id)
     {
         var response = await _userServices.FindUserById(id);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
     
     [HttpPut]
@@ -52,7 +46,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] string id,[FromBody] UpdateUserDto updateUserDto)
     {
         var response = await _userServices.UpdateUser(id ,updateUserDto);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
     
     [HttpPut]
@@ -60,6 +54,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> DeleteUser([FromRoute] string id)
     {
         var response = await _userServices.DeleteUser(id);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
 }

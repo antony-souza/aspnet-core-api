@@ -18,6 +18,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Auth([FromBody] AuthDto authDto)
     {
        var response = await _authService.Handler(authDto);
-       return await new GenericResponseController().Handler(response);
+       return GenericResponseController.Handler(response);
     }
 }

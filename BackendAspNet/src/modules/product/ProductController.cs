@@ -19,7 +19,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto)
     {
         var response = await _productService.CreateProduct(createProductDto);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
     
     [HttpGet]
@@ -27,7 +27,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> FindAllProducts()
     {
         var response = await _productService.FindAllProducts();
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
     
     [HttpGet]
@@ -35,6 +35,6 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> FindProductById([FromRoute] string id)
     {
         var response = await _productService.FindProductById(id);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);
     }
 }

@@ -19,7 +19,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto createCategoryDto)
     {
         var response = await _categoryService.Create(createCategoryDto);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);;
     }
     
     [HttpGet]
@@ -27,7 +27,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> FindAllCategories()
     {
         var response = await _categoryService.FindAllCategories();
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);;
     }
     
     [HttpGet]
@@ -35,6 +35,6 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> FindUserById([FromRoute] string id)
     {
         var response = await _categoryService.FindCategoryById(id);
-        return await new GenericResponseController().Handler(response);
+        return GenericResponseController.Handler(response);;
     }
 }
