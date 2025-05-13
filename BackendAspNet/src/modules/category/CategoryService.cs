@@ -17,7 +17,16 @@ public class CategoryService
     
     public async Task<ApiResponse> FindAllCategories()
     {
-        var users = await _appDbContext.Category.Where(c => c.Enabled == true).ToListAsync();
+        var users = await _appDbContext.Category
+            .Include(c=> c.Store)
+            .Where(c => c.Enabled == true)
+            .Select(c => new
+            {
+                c.Id,
+                c.Name,
+                store = c.Store.Name
+            })
+            .ToListAsync();
 
         return users.Count == 0 ? ApiResponse.ErrorResponse("Categories not found!") : ApiResponse.SuccessResponse(users);
     }
@@ -36,7 +45,7 @@ public class CategoryService
     
     public async Task<ApiResponse> Create(CreateCategoryDto dto)
     {
-        var checkCategory = await _appDbContext.Category.FirstOrDefaultAsync(c => c.Name == dto.Name);
+        var checkCategory = await _appDbContext.Category.FirstOrDefaultAsync(c => c.Name == dto.Name && c.StoreId == dto.StoreId);
         
         if (checkCategory != null)
         {
@@ -46,6 +55,7 @@ public class CategoryService
         var createCategory = new CategoryEntity
         {
             Name = dto.Name,
+            StoreId = dto.StoreId
         };
 
         await _appDbContext.Category.AddAsync(createCategory);

@@ -10,5 +10,9 @@ public class CreateProductDto
     [Required(ErrorMessage = "Price is required!")]
     public decimal Price { get; set; }
     
+    [Required(ErrorMessage = "CategoryId is required!")]   
     public string CategoryId { get; set; } = string.Empty;
+    
+    [Required(ErrorMessage = "StoreId is required!")]
+    public string StoreId { get; set; } = string.Empty;
 }

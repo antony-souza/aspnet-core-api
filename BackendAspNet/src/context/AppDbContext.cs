@@ -1,5 +1,6 @@
 ﻿using BackendAspNet.modules.category.entity;
 using BackendAspNet.modules.product.entity;
+using BackendAspNet.modules.store.entity;
 using BackendAspNet.modules.user.entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,4 +13,5 @@ public class AppDbContext : DbContext
     public DbSet<UserEntity> User { get; set; }
     public DbSet<CategoryEntity> Category { get; set; }
     public DbSet<ProductEntity> Product { get; set; }
+    public DbSet<StoreEntity> Store { get; set; }
 }

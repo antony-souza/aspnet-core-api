@@ -18,7 +18,7 @@ public class ProductService
     public async Task<ApiResponse> CreateProduct(CreateProductDto dto)
     {
         var checkProduct =
-            await _appDbContext.Product.FirstOrDefaultAsync(p => p.Name == dto.Name && p.CategoryId == dto.CategoryId);
+            await _appDbContext.Product.FirstOrDefaultAsync(p => p.Name == dto.Name && p.CategoryId == dto.CategoryId && p.StoreId == dto.StoreId);
 
         if (checkProduct != null)
         {
@@ -29,7 +29,8 @@ public class ProductService
         {
             Name = dto.Name,
             Price = dto.Price,
-            CategoryId = dto.CategoryId
+            CategoryId = dto.CategoryId,
+            StoreId = dto.StoreId
         };
 
         await _appDbContext.Product.AddAsync(createProduct);
@@ -41,6 +42,7 @@ public class ProductService
     public async Task<ApiResponse> FindAllProducts()
     {
         var users = await _appDbContext.Product
+            .Include(p => p.Store)
             .Include(p => p.Category)
             .Where(p => p.Enabled == true)
             .Select(p => new
@@ -48,7 +50,8 @@ public class ProductService
                 p.Id,
                 p.Name,
                 p.Price,
-                category = p.Category.Name
+                category = p.Category.Name,
+                store = p.Store.Name
             })
             .ToListAsync();
 

@@ -3,6 +3,7 @@ using System;
 using BackendAspNet.context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendAspNet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250513052042_AlterandoNomeDaTabelaStore")]
+    partial class AlterandoNomeDaTabelaStore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,8 +54,6 @@ namespace BackendAspNet.Migrations
                         .HasColumnName("updatedAt");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("categories");
                 });
@@ -97,8 +98,6 @@ namespace BackendAspNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("products");
                 });
@@ -176,17 +175,6 @@ namespace BackendAspNet.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("BackendAspNet.modules.category.entity.CategoryEntity", b =>
-                {
-                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Store");
-                });
-
             modelBuilder.Entity("BackendAspNet.modules.product.entity.ProductEntity", b =>
                 {
                     b.HasOne("BackendAspNet.modules.category.entity.CategoryEntity", "Category")
@@ -195,15 +183,7 @@ namespace BackendAspNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("BackendAspNet.modules.user.entity.UserEntity", b =>

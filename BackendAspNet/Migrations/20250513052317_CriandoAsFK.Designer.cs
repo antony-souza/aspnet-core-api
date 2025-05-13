@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendAspNet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250513030043_RelacionProductCategory")]
-    partial class RelacionProductCategory
+    [Migration("20250513052317_CriandoAsFK")]
+    partial class CriandoAsFK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,11 +44,18 @@ namespace BackendAspNet.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedAt");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("categories");
                 });
@@ -81,6 +88,11 @@ namespace BackendAspNet.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("price");
 
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedAt");
@@ -89,7 +101,37 @@ namespace BackendAspNet.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("StoreId");
+
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.store.entity.StoreEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("createdAt");
+
+                    b.Property<bool?>("Enabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stores");
                 });
 
             modelBuilder.Entity("BackendAspNet.modules.user.entity.UserEntity", b =>
@@ -121,13 +163,31 @@ namespace BackendAspNet.Migrations
                         .HasColumnType("text")
                         .HasColumnName("password");
 
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedAt");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("StoreId");
+
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.category.entity.CategoryEntity", b =>
+                {
+                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("BackendAspNet.modules.product.entity.ProductEntity", b =>
@@ -138,7 +198,26 @@ namespace BackendAspNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.user.entity.UserEntity", b =>
+                {
+                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Store");
                 });
 #pragma warning restore 612, 618
         }

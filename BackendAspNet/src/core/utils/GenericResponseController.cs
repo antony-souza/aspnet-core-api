@@ -1,6 +1,5 @@
 ﻿using BackendAspNet.core.interfaces;
 using Microsoft.AspNetCore.Mvc;
-
 namespace BackendAspNet.core.utils;
 
 public class GenericResponseController : ControllerBase

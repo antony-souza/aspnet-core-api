@@ -1,4 +1,5 @@
-﻿using BackendAspNet.context;
+﻿using System.Security.Cryptography.X509Certificates;
+using BackendAspNet.context;
 using BackendAspNet.core.interfaces;
 using BackendAspNet.modules.user.dto;
 using BackendAspNet.modules.user.entity;
@@ -18,12 +19,16 @@ public class UserServices
 
     public async Task<ApiResponse> FindAllUsers()
     {
-        var users = await _appDbContext.User.Where(u => u.Enabled == true)
+        var users = await _appDbContext.User
+            .Include(u => u.Store)
+            .Where(u => u.Enabled == true)
             .Select((u) => new
             {
                 u.Id,
                 u.Name,
                 u.Email,
+                store = u.Store.Name,
+                
             })
             .ToListAsync();
 
@@ -32,21 +37,19 @@ public class UserServices
 
     public async Task<ApiResponse> FindUserById(string id)
     {
-        var user = await _appDbContext.User.FirstOrDefaultAsync(u => u.Id == id && u.Enabled == true);
+        var user = await _appDbContext.User
+            .Include(u => u.Store)
+            .Where(u => u.Id == id && u.Enabled == true)
+            .Select(u => new
+            {
+                u.Id,
+                u.Name,
+                u.Email,
+                store = u.Store.Name,
+            })
+            .ToListAsync();
 
-        if (user == null)
-        {
-            return ApiResponse.ErrorResponse("User not found!");
-        }
-
-        var userData = new
-        {
-            user.Id,
-            user.Name,
-            user.Email,
-        };
-
-        return ApiResponse.SuccessResponse(userData);
+        return user.Count == 0 ? ApiResponse.ErrorResponse("User not found!") : ApiResponse.SuccessResponse(user);
     }
 
     public async Task<ApiResponse> CreateUser(CreateUserDto dto)
@@ -62,7 +65,8 @@ public class UserServices
         {
             Name = dto.Name,
             Email = dto.Email,
-            Password = HashPasswordUtil.Hash(dto.Password)
+            Password = HashPasswordUtil.Hash(dto.Password),
+            StoreId = dto.StoreId
         };
 
         await _appDbContext.User.AddAsync(user);

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendAspNet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250513000958_AddProductTable")]
-    partial class AddProductTable
+    [Migration("20250513051921_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,11 @@ namespace BackendAspNet.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -81,13 +86,48 @@ namespace BackendAspNet.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("price");
 
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedAt");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.store.entity.StoreEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("createdAt");
+
+                    b.Property<bool?>("Enabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Store");
                 });
 
             modelBuilder.Entity("BackendAspNet.modules.user.entity.UserEntity", b =>
@@ -119,13 +159,42 @@ namespace BackendAspNet.Migrations
                         .HasColumnType("text")
                         .HasColumnName("password");
 
+                    b.Property<string>("StoreId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("storeId");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedAt");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("StoreId");
+
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.product.entity.ProductEntity", b =>
+                {
+                    b.HasOne("BackendAspNet.modules.category.entity.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("BackendAspNet.modules.user.entity.UserEntity", b =>
+                {
+                    b.HasOne("BackendAspNet.modules.store.entity.StoreEntity", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Store");
                 });
 #pragma warning restore 612, 618
         }
