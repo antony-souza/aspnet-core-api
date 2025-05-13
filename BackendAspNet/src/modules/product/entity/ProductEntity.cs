@@ -19,6 +19,9 @@ public class ProductEntity : BaseEntity
     [Column("price")]
     public decimal Price { get; set; }
     
+    [Column("stock")]
+    public int Stock { get; set; }
+    
     [Column("categoryId")]
     public string CategoryId { get; set; } = string.Empty;
     

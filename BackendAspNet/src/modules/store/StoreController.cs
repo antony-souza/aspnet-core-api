@@ -1,9 +1,11 @@
 ﻿using BackendAspNet.core.utils;
 using BackendAspNet.modules.store.dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.store;
 
+[Authorize]
 [Route("store")]
 public class StoreController : ControllerBase
 {

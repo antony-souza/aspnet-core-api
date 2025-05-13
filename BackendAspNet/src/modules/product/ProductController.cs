@@ -1,9 +1,11 @@
 ﻿using BackendAspNet.core.utils;
 using BackendAspNet.modules.product.dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.product;
 
+[Authorize]
 [Route("product")]
 public class ProductController : ControllerBase
 {

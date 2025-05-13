@@ -29,6 +29,7 @@ public class ProductService
         {
             Name = dto.Name,
             Price = dto.Price,
+            Stock = dto.Stock,
             CategoryId = dto.CategoryId,
             StoreId = dto.StoreId
         };
@@ -50,6 +51,7 @@ public class ProductService
                 p.Id,
                 p.Name,
                 p.Price,
+                p.Stock,
                 category = p.Category.Name,
                 store = p.Store.Name
             })

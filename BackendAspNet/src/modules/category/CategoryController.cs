@@ -1,9 +1,11 @@
 ﻿using BackendAspNet.core.utils;
 using BackendAspNet.modules.category.dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.category;
 
+[Authorize]
 [Route("category")]
 public class CategoryController : ControllerBase
 {
