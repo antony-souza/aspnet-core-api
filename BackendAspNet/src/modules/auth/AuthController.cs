@@ -1,4 +1,5 @@
-﻿using BackendAspNet.modules.auth.dto;
+﻿using BackendAspNet.core.utils;
+using BackendAspNet.modules.auth.dto;
 using Microsoft.AspNetCore.Mvc;
 namespace BackendAspNet.modules.auth;
 
@@ -17,12 +18,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Auth([FromBody] AuthDto authDto)
     {
        var response = await _authService.Handler(authDto);
-
-       if (!response.Success)
-       {
-           return BadRequest(response);
-       }
-
-       return Ok(response);
+       return await new GenericResponseController().Handler(response);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BackendAspNet.modules.product.dto;
+﻿using BackendAspNet.core.utils;
+using BackendAspNet.modules.product.dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.product;
@@ -18,13 +19,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto)
     {
         var response = await _productService.CreateProduct(createProductDto);
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-        
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpGet]
@@ -32,13 +27,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> FindAllProducts()
     {
         var response = await _productService.FindAllProducts();
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpGet]
@@ -46,12 +35,6 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> FindProductById([FromRoute] string id)
     {
         var response = await _productService.FindProductById(id);
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
 }

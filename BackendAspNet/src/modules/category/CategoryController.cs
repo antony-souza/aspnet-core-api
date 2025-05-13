@@ -1,4 +1,5 @@
-﻿using BackendAspNet.modules.category.dto;
+﻿using BackendAspNet.core.utils;
+using BackendAspNet.modules.category.dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendAspNet.modules.category;
@@ -18,13 +19,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto createCategoryDto)
     {
         var response = await _categoryService.Create(createCategoryDto);
-        
-        if(!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpGet]
@@ -32,13 +27,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> FindAllCategories()
     {
         var response = await _categoryService.FindAllCategories();
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpGet]
@@ -46,12 +35,6 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> FindUserById([FromRoute] string id)
     {
         var response = await _categoryService.FindCategoryById(id);
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
 }

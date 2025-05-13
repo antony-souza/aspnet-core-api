@@ -1,4 +1,5 @@
-﻿using BackendAspNet.modules.user.dto;
+﻿using BackendAspNet.core.utils;
+using BackendAspNet.modules.user.dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,13 +36,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> FindAllUsers()
     {
         var response = await _userServices.FindAllUsers();
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpGet]
@@ -49,13 +44,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> FindUserById([FromRoute] string id)
     {
         var response = await _userServices.FindUserById(id);
-
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpPut]
@@ -63,11 +52,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] string id,[FromBody] UpdateUserDto updateUserDto)
     {
         var response = await _userServices.UpdateUser(id ,updateUserDto);
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
     
     [HttpPut]
@@ -75,10 +60,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> DeleteUser([FromRoute] string id)
     {
         var response = await _userServices.DeleteUser(id);
-        if (!response.Success)
-        {
-            return BadRequest(response);
-        }
-        return Ok(response);
+        return await new GenericResponseController().Handler(response);
     }
 }
