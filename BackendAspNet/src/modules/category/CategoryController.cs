@@ -26,4 +26,32 @@ public class CategoryController : ControllerBase
 
         return Ok(response);
     }
+    
+    [HttpGet]
+    [Route("all-categories")]
+    public async Task<IActionResult> FindAllCategories()
+    {
+        var response = await _categoryService.FindAllCategories();
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
+    
+    [HttpGet]
+    [Route("find-by-id/{id:guid}")]
+    public async Task<IActionResult> FindUserById([FromRoute] string id)
+    {
+        var response = await _categoryService.FindCategoryById(id);
+
+        if (!response.Success)
+        {
+            return BadRequest(response);
+        }
+
+        return Ok(response);
+    }
 }

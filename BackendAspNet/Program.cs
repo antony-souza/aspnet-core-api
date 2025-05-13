@@ -3,6 +3,7 @@ using BackendAspNet.context;
 using BackendAspNet.middleware;
 using BackendAspNet.modules.auth;
 using BackendAspNet.modules.category;
+using BackendAspNet.modules.product;
 using BackendAspNet.modules.user;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +35,8 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<ProductService>();
+
 
 var app = builder.Build();
 
